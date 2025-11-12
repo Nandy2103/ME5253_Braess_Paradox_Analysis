@@ -1,4 +1,4 @@
-function braess_paradox1()
+function braess_paradox_topology()
   
     % Network Parameters
     N = 8;                      % Number of nodes
