@@ -1,4 +1,4 @@
-# ME5253
+# ME5253-Network Dynamics in Control Systems
 
 This repository contains all the relevant matlab files.
 
@@ -17,6 +17,6 @@ To replicate our output, please make changes to the "braess_paradox_addcap_from_
 - 8 node system - nodes_input_withP.csv
 <img width="608" height="729" alt="image" src="https://github.com/user-attachments/assets/d39a51b7-1f8a-41b2-bc61-56d5e4941db5" />
 
-- 10 node systme - nodes_input_withP_check_16.csv
+- 10 node system - nodes_input_withP_check_16.csv
 
 <img width="630" height="736" alt="image" src="https://github.com/user-attachments/assets/6153f53a-994e-4515-94de-e77ad2773888" />
