@@ -1,4 +1,4 @@
-function braess_paradox()
+function braess_paradox_original_paper()
   
     % Network Parameters
     N = 8;                      % Number of nodes
