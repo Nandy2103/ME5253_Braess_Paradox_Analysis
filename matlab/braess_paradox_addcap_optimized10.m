@@ -3,9 +3,9 @@ function braess_paradox_addcap_optimized10()
     % --- 1. Network and System Parameters ---
     N = 10;                      % Number of nodes
     P_base = 1.0;               % Base power
-    K_uniform = 1.03 * P_base;  % K > Kc
+    K_uniform = 2.5 * P_base;  % K > Kc
     alpha = P_base;             % Damping coefficient
-    update_factor = 0.3;        % The factor by which K_uniform is multiplied
+    update_factor = 0;        % The factor by which K_uniform is multiplied
     
     % Node types (Producers: +P, Consumers: -P)
     producers = [2, 3, 4, 7, 9]; % Nodes with +P
@@ -18,14 +18,14 @@ function braess_paradox_addcap_optimized10()
     % --- 2. Adjacency Matrices and Coupling Strengths (Original) ---
     A_original = zeros(N, N);
     % Edges from Figure 1a (12 edges total)
-    edges_orig = [1,2; 1,6; 1,7; 2,3; 3,4; 3,7; 4,8; 4,5; 5,6; 6,8; 5,9; 7,10];
+    edges_orig = [10,2; 1,7; 2,3; 3,7; 4,8; 4,5; 5,6; 10,8; 3,9; 9,4; 1,10; 10,6; 9,10];
     for i = 1:size(edges_orig, 1)
         n1 = edges_orig(i, 1);
         n2 = edges_orig(i, 2);
         A_original(n1, n2) = 1;
         A_original(n2, n1) = 1;
     end
-    K_matrix_original = K_uniform * A_original; 
+    K_matrix_original = K_uniform * A_original;
     
     % --- Define the Edges to "Add Capacity" To ---
     % This list contains all 12 edges from the original network
@@ -78,8 +78,8 @@ function braess_paradox_addcap_optimized10()
     end
     
     % Node IDs:   1    2    3    4    5    6    7    8  9  10
-    x_coords = [6.0, 5.0, 6.0, 3.0, 2.0, 3.0, 7.0, 4.0, 1.0, 8.0]; 
-    y_coords = [2.0, 3.0, 4.0, 4.0, 3.0, 2.0, 3.0, 3.0, 3.0, 3.0]; 
+    x_coords = [6.0, 5.0, 6.0, 3.0, 2.0, 3.0, 7.0, 4.0, 4.5, 4.5]; 
+    y_coords = [2.0, 3.0, 4.0, 4.0, 3.0, 2.0, 3.0, 3.0, 4.0, 2.0]; 
     A_add_capacity = A_original; % Topology is the same
     G_add_capacity = graph(A_add_capacity, node_labels, 'omitselfloops');
     
@@ -90,7 +90,7 @@ function braess_paradox_addcap_optimized10()
         n1 = edges_to_update(k, 1);
         n2 = edges_to_update(k, 2);
         
-        subplot(2, 6, k);
+        subplot(2, 7, k);
         p_plot = plot(G_add_capacity, 'XData', x_coords, 'YData', y_coords, 'LineWidth', 2);
         title(sprintf('b K(%d,%d) = %.1f K_{orig}', n1, n2, update_factor));
         % Assuming customize_plot is defined elsewhere to color nodes/edges
@@ -110,7 +110,7 @@ function braess_paradox_addcap_optimized10()
         phi_pi_current = y_results{k}(:, 1:N) / pi;
         t_current = t_results{k};
         
-        subplot(2, 6, k);
+        subplot(2, 7, k);
         hold on;
         h_prod = plot(t_current, phi_pi_current(:, producers), 'r-', 'LineWidth', 1.5);
         h_cons = plot(t_current, phi_pi_current(:, consumers), 'g-', 'LineWidth', 1.5);
@@ -196,7 +196,7 @@ function braess_paradox_addcap_optimized10()
     
     % Choose a set of distinguishable colors/styles for the 12 lines
     % Using blue for the first few to highlight (e.g., matching the paper)
-    colors = [0 0 1; 0.5 0.5 1; 0 0 0.5; 1 0 0; 1 0.5 0.5; 0.5 0 0; 0 1 0; 0.5 1 0.5; 0 0.5 0; 0 1 1; 0.5 0.5 0; 0.5 0 0.5]; 
+    colors = [0 0 1; 0.5 0.5 1; 0 0 0.5; 1 0 0; 1 0.5 0.5; 0.5 0 0; 0 1 0; 0.5 1 0.5; 0 0.5 0; 0 1 1; 0.5 0.5 0; 0.5 0 0.5; 1 1 0]; 
     
     h_updates = zeros(1, num_updates);
     for u_idx = 1:num_updates
